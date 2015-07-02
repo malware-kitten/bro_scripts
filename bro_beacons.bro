@@ -6,7 +6,7 @@ module BEACON;
 @load base/protocols/http
 
 #this is our master collection, we'll use this to store all our information
-global master_collection: table[addr,addr] of vector of time;
+global master_collection: table[addr,addr] of vector of time  &synchronized;
 
 export {
     redef enum Log::ID += { LOG };
