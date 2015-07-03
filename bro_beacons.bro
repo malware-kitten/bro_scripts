@@ -39,7 +39,7 @@ function calculate_entropy(host: addr, server: addr): double
 		if ( i+1 >= length )
 			break;
 		else {
-			intervals[i] = collection[i+1] - collection[i];
+			intervals[i] = double_to_interval(double_to_count(interval_to_double(collection[i+1] - collection[i])));
 		}
 	}
 	
@@ -62,7 +62,7 @@ function calculate_entropy(host: addr, server: addr): double
 			sum = 4;
 	}
 	#debug statement
-	#print fmt("host:%s,server:%s,entropy:%s,interval:%s",host,server,|sum|,intervals);
+	print fmt("host:%s,server:%s,entropy:%s,interval:%s",host,server,|sum|,intervals);
 	return |sum|;
 }
 
