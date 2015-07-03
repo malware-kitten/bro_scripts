@@ -62,7 +62,7 @@ function calculate_entropy(host: addr, server: addr): double
 			sum = 4;
 	}
 	#debug statement
-	print fmt("host:%s,server:%s,entropy:%s,interval:%s",host,server,|sum|,intervals);
+	#print fmt("host:%s,server:%s,entropy:%s,interval:%s",host,server,|sum|,intervals);
 	return |sum|;
 }
 
