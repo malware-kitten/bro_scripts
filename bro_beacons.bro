@@ -18,6 +18,10 @@ export {
 	entropy:	double	&log;
     };
     global log_beacon: event(rec: Info);
+    
+    # Add hosts to ignore with: 
+    # redef BEACON::whitelist += {192.168.0.1/32, 192.168.1.0/24}
+    const whitelist: set [subnet] = set() &redef;
 
 }
 event bro_init()
@@ -74,6 +78,12 @@ event http_request(c: connection, method: string, original_URI: string, unescape
 	local ts: time;
 	local uid: string;
 	local entropy_result: double;
+	
+	for (sn in whitelist) {
+	    if (c$id$resp_h in sn || c$id$orig_h in sn ) 
+            return;
+        }
+        
 	if ( method == "POST" || method == "GET" ) {
 		#grab the relevant information
 		host = c$id$orig_h;
