@@ -100,14 +100,13 @@ event log_smtp(rec: SMTP::Info) {
 	#############################################################################################
 	# Iterate through both the senders and recipients checking for close distances
 	#############################################################################################
-	local length: double;
+	local length: count = 0;
 	for (i in recipient) {
 		for (j in sender) {
-			length = |i| - |j|;
-			if (length < 0) 
-				length = |j| - |i|;
-			if (length > 3) 
-				next;
+			if (|j| > |i|)
+                               length = |j| - |i|;
+                        else
+                               length = |i| - |j|;
 			if (j in whitelist) 
 				next;
 			dist = levenshtein_distance(j,i);
