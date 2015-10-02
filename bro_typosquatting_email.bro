@@ -107,6 +107,8 @@ event log_smtp(rec: SMTP::Info) {
                                length = |j| - |i|;
                         else
                                length = |i| - |j|;
+			if (length > 3)
+				next;
 			if (j in whitelist) 
 				next;
 			dist = levenshtein_distance(j,i);
