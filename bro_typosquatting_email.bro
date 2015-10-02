@@ -32,6 +32,7 @@ event log_smtp(rec: SMTP::Info) {
 	local sender: string_set;
 	local recipient: string_set;
 	local dist: double;
+	local max_dist: double;
 
 	###########################################################################################
 	# Check the "Mail From" Field
@@ -103,16 +104,24 @@ event log_smtp(rec: SMTP::Info) {
 	local length: count = 0;
 	for (i in recipient) {
 		for (j in sender) {
+
+			#next if length is too far off
 			if (|j| > |i|)
                                length = |j| - |i|;
                         else
                                length = |i| - |j|;
 			if (length > 3)
 				next;
+
+			#next if in whitelist
 			if (j in whitelist) 
 				next;
+
+			#adjust distance based on length
+			max_dist = |j| * 0.2;
+
 			dist = levenshtein_distance(j,i);
-			if ( 0 < dist && dist < 4) {
+			if ( 0 < dist && dist < max_dist) {
 				#print fmt("%s,%s",i,j);
 				NOTICE([$note=Typosquat,
 					$msg = fmt("Email from to typosquatted domains %s to %s",i,j),
@@ -128,7 +137,8 @@ event log_smtp(rec: SMTP::Info) {
 	for (j in sender) {
 		for (i in companylist){
 			dist = levenshtein_distance(j,i);
-			if ( 0 < dist && dist < 4) {
+			max_dist = |j| * 0.2;
+			if ( 0 < dist && dist < max_dist) {
                                 #print fmt("%s,%s",i,j);
                                 NOTICE([$note=Typosquat,
                                         $msg = fmt("Email from to typosquatted domains %s to %s",i,j),
