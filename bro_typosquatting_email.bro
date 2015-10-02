@@ -1,5 +1,7 @@
-#Author: Nick Hoffman / securitykitten.github.io / @infoseckitten
+#Author: Nick Hoffman / securitykitten.github.io / @infoseckitten 
+#Company: Morphick Inc. / @MorphickDefense
 #Description:  A bro script to find typosquatted domain names within SMTP streams
+#Except as otherwise noted, the content of this page is licensed under the Creative Commons Attribution 3.0 License, and code samples are licensed under the Apache 2.0 License.
 
 @load base/frameworks/notice/main
 @load base/protocols/smtp/main
