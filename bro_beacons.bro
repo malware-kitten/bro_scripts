@@ -43,7 +43,7 @@ function calculate_entropy(host: addr, server: addr): double
 		if ( i+1 >= length )
 			break;
 		else {
-			intervals[i] = double_to_interval(double_to_count(interval_to_double(collection[i+1] - collection[i])));
+			intervals[i] = interval_to_double(collection[i+1] - collection[i])));
 		}
 	}
 	
